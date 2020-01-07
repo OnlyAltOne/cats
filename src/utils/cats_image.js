@@ -5,9 +5,11 @@ const random = require('random')
 //function to find a random cats image, returns cats id and image url
 const cat_random = (callback) =>{
     
-    const url = "https://api.thecatapi.com/v1/images/search?api_key=a9a141d2-4ea9-4c66-9e1a-5a3a532f6567limit=1&page=" + random.int(min = 1, max = 100) + "&order=disc"
-
-    request({url, json:true} , (error, {body}) => {
+    const url = "https://api.thecatapi.com/v1/images/search?limit=1&page=" + random.int(min = 1, max = 100) + "&order=disc"
+    const headers = {
+        "x-api-key": "a9a141d2-4ea9-4c66-9e1a-5a3a532f6567"
+    }
+    request({url, json:true, headers} , (error, {body}) => {
         if (error){
             callback('Unable to connect cats services', undefined)
         } else if(!body[0]){
@@ -31,7 +33,7 @@ const cat_by_breed = (breed, callback) => {
         if(error){
             callback('Unable to connect cats services', undefined)
         } else if(!body[0]){
-            callback('Unable to find' + breed, undefined)
+            callback('Unable to find ' + breed + '. Try another request', undefined)
         } else{
             callback(undefined, {
                 description: body[0].description,
