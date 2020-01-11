@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const date = require('date-and-time');
 
 
-const Post = mongoose.model('Post', {
+const Blog = mongoose.model('Blog', {
     body:{
         type: String,
         required: true,
@@ -17,7 +17,12 @@ const Post = mongoose.model('Post', {
     date:{
         type: String,
         default:(date.format(new Date(), 'YYYY/MM/DD HH:mm'))
+    },
+    owner:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
 })
 
-module.exports = Post
+module.exports = Blog
